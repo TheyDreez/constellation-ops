@@ -1,0 +1,280 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================================
+   CONSTELLATION OPS — Design Tokens (tema espacial total)
+   ============================================================ */
+:root {
+  --background: #070a12;
+  --background-subtle: #0d1120;
+  --surface: #111827;
+  --surface-glass: rgba(17, 24, 39, 0.75);
+  --surface-hover: #1a2235;
+  --border: rgba(167, 139, 250, 0.15);
+  --border-strong: rgba(167, 139, 250, 0.28);
+  --text-primary: #f1f5f9;
+  --text-secondary: #aab4c5;
+  --text-muted: #6b7688;
+
+  --brand: #a78bfa;
+  --brand-light: rgba(167, 139, 250, 0.14);
+  --brand-hover: #c4b5fd;
+  --brand-glow: rgba(167, 139, 250, 0.3);
+
+  --danger: #f87171;
+  --danger-light: rgba(248, 113, 113, 0.12);
+  --success: #34d399;
+  --success-light: rgba(52, 211, 153, 0.12);
+  --warning: #fbbf24;
+  --warning-light: rgba(251, 191, 36, 0.12);
+
+  --sidebar-width: 240px;
+  --sidebar-width-collapsed: 68px;
+  --header-height: 56px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px -2px rgba(0,0,0,0.5);
+  --shadow-lg: 0 16px 32px -8px rgba(0,0,0,0.6);
+  --shadow-glow: 0 0 0 1px rgba(167,139,250,0.15), 0 8px 24px -4px rgba(167,139,250,0.2);
+
+  /* Ops accent palette */
+  --ops-cyan: #22d3ee;
+  --ops-emerald: #34d399;
+  --ops-violet: #a78bfa;
+  --ops-amber: #fbbf24;
+  --ops-grid-line: rgba(167, 139, 250, 0.05);
+}
+
+/* Always dark — no light mode variant */
+html { color-scheme: dark; }
+html.dark { color-scheme: dark; }
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    linear-gradient(var(--ops-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ops-grid-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(167,139,250,0.45); }
+
+*:focus-visible {
+  outline: 2px solid rgba(167,139,250,0.6);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   SURFACE / GLASS
+   ============================================================ */
+.glass {
+  background: rgba(13, 17, 32, 0.82);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border: 1px solid var(--border);
+}
+
+.surface-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.surface-card-hover {
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.surface-card-hover:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+/* ============================================================
+   SKELETON
+   ============================================================ */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-hover) 25%,
+    rgba(167,139,250,0.08) 37%,
+    var(--surface-hover) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.6s ease infinite;
+  border-radius: 8px;
+}
+
+/* ============================================================
+   TONE BADGES (dark-space variants)
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.1875rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+:root {
+  --tone-blue-bg: rgba(34, 211, 238, 0.12);
+  --tone-blue-text: #67e8f9;
+  --tone-blue-border: rgba(34, 211, 238, 0.28);
+
+  --tone-amber-bg: rgba(251, 191, 36, 0.12);
+  --tone-amber-text: #fcd34d;
+  --tone-amber-border: rgba(251, 191, 36, 0.28);
+
+  --tone-purple-bg: rgba(167, 139, 250, 0.14);
+  --tone-purple-text: #c4b5fd;
+  --tone-purple-border: rgba(167, 139, 250, 0.3);
+
+  --tone-green-bg: rgba(52, 211, 153, 0.12);
+  --tone-green-text: #6ee7b7;
+  --tone-green-border: rgba(52, 211, 153, 0.28);
+
+  --tone-gray-bg: rgba(255,255,255,0.07);
+  --tone-gray-text: #94a3b8;
+  --tone-gray-border: rgba(255,255,255,0.14);
+
+  --tone-red-bg: rgba(248, 113, 113, 0.12);
+  --tone-red-text: #fca5a5;
+  --tone-red-border: rgba(248, 113, 113, 0.28);
+
+  --tone-orange-bg: rgba(251, 146, 60, 0.12);
+  --tone-orange-text: #fdba74;
+  --tone-orange-border: rgba(251, 146, 60, 0.28);
+
+  --tone-yellow-bg: rgba(250, 204, 21, 0.12);
+  --tone-yellow-text: #fde047;
+  --tone-yellow-border: rgba(250, 204, 21, 0.28);
+}
+
+/* Same in dark — already dark-only */
+.dark {
+  --tone-blue-bg: rgba(34, 211, 238, 0.12);
+  --tone-blue-text: #67e8f9;
+  --tone-blue-border: rgba(34, 211, 238, 0.28);
+  --tone-amber-bg: rgba(251, 191, 36, 0.12);
+  --tone-amber-text: #fcd34d;
+  --tone-amber-border: rgba(251, 191, 36, 0.28);
+  --tone-purple-bg: rgba(167, 139, 250, 0.14);
+  --tone-purple-text: #c4b5fd;
+  --tone-purple-border: rgba(167, 139, 250, 0.3);
+  --tone-green-bg: rgba(52, 211, 153, 0.12);
+  --tone-green-text: #6ee7b7;
+  --tone-green-border: rgba(52, 211, 153, 0.28);
+  --tone-gray-bg: rgba(255,255,255,0.07);
+  --tone-gray-text: #94a3b8;
+  --tone-gray-border: rgba(255,255,255,0.14);
+  --tone-red-bg: rgba(248, 113, 113, 0.12);
+  --tone-red-text: #fca5a5;
+  --tone-red-border: rgba(248, 113, 113, 0.28);
+  --tone-orange-bg: rgba(251, 146, 60, 0.12);
+  --tone-orange-text: #fdba74;
+  --tone-orange-border: rgba(251, 146, 60, 0.28);
+  --tone-yellow-bg: rgba(250, 204, 21, 0.12);
+  --tone-yellow-text: #fde047;
+  --tone-yellow-border: rgba(250, 204, 21, 0.28);
+}
+
+.tone-blue   { background: var(--tone-blue-bg);   color: var(--tone-blue-text);   border-color: var(--tone-blue-border); }
+.tone-amber  { background: var(--tone-amber-bg);  color: var(--tone-amber-text);  border-color: var(--tone-amber-border); }
+.tone-purple { background: var(--tone-purple-bg); color: var(--tone-purple-text); border-color: var(--tone-purple-border); }
+.tone-green  { background: var(--tone-green-bg);  color: var(--tone-green-text);  border-color: var(--tone-green-border); }
+.tone-gray   { background: var(--tone-gray-bg);   color: var(--tone-gray-text);   border-color: var(--tone-gray-border); }
+.tone-red    { background: var(--tone-red-bg);    color: var(--tone-red-text);    border-color: var(--tone-red-border); }
+.tone-orange { background: var(--tone-orange-bg); color: var(--tone-orange-text); border-color: var(--tone-orange-border); }
+.tone-yellow { background: var(--tone-yellow-bg); color: var(--tone-yellow-text); border-color: var(--tone-yellow-border); }
+.tone-brand  { background: var(--brand-light);    color: var(--brand);            border-color: transparent; }
+
+/* ============================================================
+   SIDEBAR COLLAPSE
+   ============================================================ */
+[data-sidebar-collapsed="true"] .sidebar-label,
+[data-sidebar-collapsed="true"] .sidebar-section-title,
+[data-sidebar-collapsed="true"] .sidebar-user-info,
+[data-sidebar-collapsed="true"] .sidebar-logo-text {
+  display: none;
+}
+[data-sidebar-collapsed="true"] .sidebar-user-row {
+  justify-content: center;
+}
+
+/* ============================================================
+   OPS UTILITIES
+   ============================================================ */
+.ops-grid-bg {
+  background-image:
+    linear-gradient(var(--ops-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ops-grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.ops-noise { position: relative; }
+.ops-noise::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none; opacity: 0.025;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  border-radius: inherit;
+  mix-blend-mode: overlay;
+}
+
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  70%  { box-shadow: 0 0 0 5px transparent; opacity: 0.35; }
+  100% { box-shadow: 0 0 0 0 transparent; opacity: 1; }
+}
+.ops-live-dot {
+  position: relative; display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+}
+.ops-live-dot::before {
+  content: ""; position: absolute; inset: -4px; border-radius: 50%;
+  background: currentColor; opacity: 0.4;
+  animation: live-pulse 2.2s cubic-bezier(0.4,0,0.6,1) infinite;
+}
+
+@keyframes ops-rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ops-rise { animation: ops-rise 0.4s ease both; }
+
+/* ============================================================
+   INPUTS / SELECTS — dark spatial style
+   ============================================================ */
+input, select, textarea {
+  background: var(--surface) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border) !important;
+}
+input::placeholder { color: var(--text-muted) !important; }
+input:focus, select:focus, textarea:focus {
+  border-color: var(--brand) !important;
+  box-shadow: 0 0 0 3px rgba(167,139,250,0.15) !important;
+}
+option { background: var(--surface); color: var(--text-primary); }
+
+/* ============================================================
+   DIVIDERS
+   ============================================================ */
+.divide-y > * + * { border-top: 1px solid var(--border); }
