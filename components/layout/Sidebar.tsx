@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { CURRENT_USER } from "@/lib/mock-data";
 import { motion } from "framer-motion";
+import { StarField } from "@/components/ui/StarField";
 import {
   LayoutDashboard, Ticket, Plus, Users, Clock,
   BarChart3, ChevronsLeft, ChevronsRight, UserCircle,
@@ -62,12 +63,13 @@ export function Sidebar() {
       className="fixed left-0 top-0 h-full flex flex-col z-40 transition-[width] duration-300 ease-out"
     >
       <div
-        className="relative h-full flex flex-col border-r"
+        className="relative h-full flex flex-col border-r overflow-hidden"
         style={{
           background: "linear-gradient(180deg, #080c18 0%, #060a13 100%)",
           borderColor: "rgba(167,139,250,0.15)",
         }}
       >
+        <StarField className="opacity-40" count={50} seed={7} />
         {/* Collapse toggle */}
         <button
           onClick={toggleCollapsed}
@@ -89,14 +91,24 @@ export function Sidebar() {
           className="flex items-center gap-3 px-4 h-14 flex-shrink-0 overflow-hidden"
           style={{ borderBottom: "1px solid rgba(167,139,250,0.12)" }}
         >
-          <div
-            className="w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-base font-bold"
-            style={{
-              background: "linear-gradient(135deg, #7c3aed, #4f46e5)",
-              boxShadow: "0 0 16px rgba(124,58,237,0.4)",
-            }}
-          >
-            ✦
+          <div className="relative w-8 h-8 flex-shrink-0 flex items-center justify-center">
+            <motion.div
+              className="absolute inset-[-4px] rounded-full"
+              style={{
+                background: "radial-gradient(circle, rgba(251,191,36,0.55) 0%, rgba(251,146,60,0.2) 60%, transparent 75%)",
+              }}
+              animate={{ scale: [1, 1.18, 1], opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <div
+              className="relative w-full h-full rounded-xl flex items-center justify-center text-white text-base font-bold"
+              style={{
+                background: "radial-gradient(circle at 35% 30%, #fde68a, #fbbf24 45%, #d97706 100%)",
+                boxShadow: "0 0 14px rgba(251,191,36,0.5)",
+              }}
+            >
+              ✦
+            </div>
           </div>
           <div className="sidebar-logo-text">
             <p className="text-white font-bold text-sm leading-tight tracking-tight" style={{ fontFamily: "monospace", letterSpacing: "1px" }}>

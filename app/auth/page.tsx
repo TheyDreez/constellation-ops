@@ -1,10 +1,44 @@
 "use client";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { Shield, Eye, EyeOff } from "lucide-react";
+import { StarField } from "@/components/ui/StarField";
+import { OrbitField } from "@/components/ui/OrbitField";
+import { Eye, EyeOff, Sparkles } from "lucide-react";
+
+const DEMO_ACCOUNTS = [
+  { email: "admin@empresa.com", role: "Admin", body: "Sol", color: "#fbbf24" },
+  { email: "suporte@empresa.com", role: "Suporte", body: "Planeta", color: "#22d3ee" },
+  { email: "joao@empresa.com", role: "Usuário", body: "Planeta", color: "#34d399" },
+];
+
+function Sun() {
+  return (
+    <div className="relative w-16 h-16 mb-4 flex items-center justify-center">
+      <motion.div
+        className="absolute inset-[-10px] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(251,191,36,0.55) 0%, rgba(251,146,60,0.22) 55%, transparent 75%)",
+          filter: "blur(4px)",
+        }}
+        animate={{ scale: [1, 1.14, 1], opacity: [0.65, 1, 0.65] }}
+        transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div
+        className="relative w-12 h-12 rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle at 35% 30%, #fef9c3 0%, #fde68a 22%, #fbbf24 48%, #f59e0b 76%, #d97706 100%)",
+          boxShadow:
+            "0 0 22px 4px rgba(251,191,36,0.55), 0 0 56px 12px rgba(251,146,60,0.28), inset -4px -4px 10px rgba(146,64,14,0.35)",
+        }}
+      />
+    </div>
+  );
+}
 
 export default function LoginPage() {
   const router = useRouter();
@@ -50,43 +84,47 @@ export default function LoginPage() {
   return (
     <div
       className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
-      style={{ background: "var(--background)" }}
+      style={{
+        background:
+          "radial-gradient(ellipse 120% 80% at 50% -10%, #14102a 0%, #070a12 55%, #05070c 100%)",
+      }}
     >
-      {/* Atmosfera com a identidade de marca (índigo → violeta), igual ao resto do app */}
+      <StarField className="opacity-90" />
+      <OrbitField />
+
+      {/* Nebulosas de fundo, agora douradas/violetas como uma via láctea */}
       <div
         className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none"
-        style={{ background: "var(--brand)", opacity: 0.18 }}
+        style={{ background: "#7c3aed", opacity: 0.14 }}
       />
       <div
         className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-3xl pointer-events-none"
-        style={{ background: "#7c3aed", opacity: 0.16 }}
+        style={{ background: "#f59e0b", opacity: 0.08 }}
       />
-
-      <div className="absolute top-5 right-5">
-        <ThemeToggle />
-      </div>
 
       <div className="w-full max-w-sm relative z-10">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
-            style={{ background: "linear-gradient(135deg, var(--brand), #7c3aed)", boxShadow: "var(--shadow-glow)" }}
+          <Sun />
+          <h1 className="text-xl font-bold tracking-tight" style={{ color: "var(--text-primary)" }}>
+            HelpDesk
+          </h1>
+          <p
+            className="text-[10px] mt-1 flex items-center gap-1.5 font-medium uppercase"
+            style={{ color: "var(--brand)", letterSpacing: "2px", fontFamily: "monospace" }}
           >
-            <Shield className="w-6 h-6 text-white" />
-          </div>
-          <h1 className="text-xl font-bold" style={{ color: "var(--text-primary)" }}>HelpDesk</h1>
-          <p className="text-sm mt-1" style={{ color: "var(--text-muted)" }}>Sistema de Tickets</p>
+            <Sparkles size={11} /> Sistema Solar de Tickets
+          </p>
         </div>
 
         {/* Card */}
         <div className="glass rounded-2xl p-6 space-y-4" style={{ boxShadow: "var(--shadow-lg)" }}>
           <div>
             <h2 className="font-semibold text-base" style={{ color: "var(--text-primary)" }}>
-              {mode === "login" ? "Entrar na conta" : "Criar conta"}
+              {mode === "login" ? "Entrar na órbita" : "Criar conta"}
             </h2>
             <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-              {mode === "login" ? "Bem-vindo de volta" : "Preencha seus dados para acessar"}
+              {mode === "login" ? "Bem-vindo de volta ao sistema" : "Preencha seus dados para acessar"}
             </p>
           </div>
 
@@ -161,25 +199,33 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Demo hint */}
+        {/* Demo hint — agora como corpos celestes do sistema */}
         <div className="glass mt-4 rounded-xl p-4">
-          <p className="text-xs font-medium mb-2" style={{ color: "var(--text-muted)" }}>Contas de demonstração:</p>
+          <p
+            className="text-[10px] font-semibold mb-2.5 uppercase"
+            style={{ color: "var(--text-muted)", letterSpacing: "1.5px", fontFamily: "monospace" }}
+          >
+            Corpos celestes de demonstração
+          </p>
           <div className="space-y-1">
-            {[
-              { email: "admin@empresa.com", role: "Admin" },
-              { email: "suporte@empresa.com", role: "Suporte" },
-              { email: "joao@empresa.com", role: "Usuário" },
-            ].map((c) => (
+            {DEMO_ACCOUNTS.map((c) => (
               <button
                 key={c.email}
                 onClick={() => setForm({ ...form, email: c.email, password: "senha123" })}
-                className="w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg transition-colors text-left"
+                className="w-full flex items-center gap-2.5 px-2.5 py-1.5 rounded-lg transition-colors text-left"
                 style={{ color: "var(--text-secondary)" }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = "var(--surface-hover)")}
                 onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
               >
-                <span className="text-xs">{c.email}</span>
-                <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>{c.role}</span>
+                <span
+                  className="w-2.5 h-2.5 rounded-full flex-shrink-0"
+                  style={{ background: c.color, boxShadow: `0 0 8px 1px ${c.color}99` }}
+                />
+                <span className="text-xs flex-1">{c.email}</span>
+                <span className="text-[9px] uppercase" style={{ color: "var(--text-muted)", fontFamily: "monospace", letterSpacing: "1px" }}>
+                  {c.body}
+                </span>
+                <span className="text-[10px]" style={{ color: c.color }}>{c.role}</span>
               </button>
             ))}
           </div>
